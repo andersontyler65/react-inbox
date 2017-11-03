@@ -67,11 +67,45 @@ const messages =  [
       ]
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = { messages: messages};
+  }
+
+
+  toggleProperty = (message, property) => {
+    this.setState((prevState) => {
+      console.log(prevState);
+      const index = prevState.messages.indexOf(message)
+      return {
+        messages: [
+          ...prevState.messages.slice(0, index),
+          { ...message, [property]: !message[property] },
+          ...prevState.messages.slice(index + 1),
+        ]
+      };
+    })
+  }
+
+  toggleSelect = (message) => {
+    this.toggleProperty(message, 'selected')
+  }
+
+  toggleStar(message) {
+    this.toggleProperty(message, 'starred')
+  }
+
   render() {
+    console.log(this.state);
     return (
       <div className="App">
         <Toolbar />
-        <Messages messages= { messages }/>
+        <Messages
+          messages={ this.state.messages }
+          toggleProperty={this.toggleProperty}
+          toggleSelect={this.toggleSelect}
+          toggleStar={this.toggleStar}
+        />
         {/* <Message /> */}
       </div>
     )

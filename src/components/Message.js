@@ -2,29 +2,12 @@ import React from 'react';
 import Messages from '../components/Messages';
 
 class Message extends React.Component {
-  state = {}
+  // state = {}
   constructor(props) {
     super(props)
-    console.log(props)
-    this.state = { message: props
-  };
-}
-
-toggleProperty(message, property) {
-  this.setState((prevState) => {
-    const index = prevState.messages.indexOf(message)
-    return {
-      messages: [
-        ...prevState.messages.slice(0, index),
-        { ...message, [property]: !message[property] },
-        ...prevState.messages.slice(index + 1),
-      ]
-    };
-  })
-}
-
-toggleSelect(message) {
-  this.toggleProperty(message, 'selected')
+    // console.log(props)
+    // this.state = { message: props
+  // };
 }
 
 // toggleStar(message) {
@@ -47,10 +30,10 @@ markAsRead() {
       }))
     }
 
-  render(state) {
-    console.log(this.state)
+  render() {
+    // console.log(this.props)
     const messageSubject = {
-        subject: this.state.message.message.subject,
+        subject: this.props.message.subject,
       }
 
       const readClass = messageSubject.read ? 'read' : 'unread'
@@ -60,10 +43,11 @@ markAsRead() {
       <div className="col-xs-1">
         <div className="row">
           <div className="col-xs-2">
-            <input type="checkbox" />
+            <input type="checkbox"
+              onClick={()=>this.props.toggleSelect(this.props.message)}/>
           </div>
-          <div className="col-xs-2">
-            <i className="star fa fa-star-o"></i>
+          <div className="star-container col-xs-2">
+            <i className={this.props.message.starred?'star fa fa-star':'star fa fa-star-o'} onClick={()=>this.props.toggleStar(this.props.message)}></i>
           </div>
         </div>
       </div>
@@ -74,7 +58,6 @@ markAsRead() {
         )
       }
   }
-
 
 
 export default Message;
