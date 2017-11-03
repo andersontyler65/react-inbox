@@ -71,8 +71,8 @@ class App extends Component {
     return (
       <div className="App">
         <Toolbar />
-        {/* <Message /> */}
         <Messages messages= { messages }/>
+        {/* <Message /> */}
       </div>
     )
   }
