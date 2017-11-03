@@ -1,20 +1,18 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Toolbar from './components/Toolbar'
-import Messages from './components/Messages'
+import Toolbar from './components/Toolbar';
+import Message from './components/Message';
+import Messages from './components/Messages';
+import Index from './stories/index'
 
 class App extends Component {
- constructor(props) {
-   super(props)
-   this.state = { messages: props.messages}
- }
-
   render() {
     return (
       <div className="App">
         <Toolbar />
-        <Messages messages={ this.state.messages } />
+        <Message />
+        <Messages />
       </div>
     )
   }
