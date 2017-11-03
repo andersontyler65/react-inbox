@@ -2,27 +2,11 @@ import React from 'react';
 import Messages from '../components/Messages';
 
 class Message extends React.Component {
-  // state = {}
   constructor(props) {
     super(props)
-    // console.log(props)
-    // this.state = { message: props
-  // };
+
 }
 
-// toggleStar(message) {
-//   this.toggleProperty(message, 'starred')
-// }
-
-markAsRead() {
-  this.setState((prevState) => {
-    return {
-      messages: prevState.messages.map(message => (
-        message.selected ? { ...message, read: true } : message
-      ))
-    }
-  })
-}
 
   send = () => {
       this.setState((props) => ({
@@ -43,7 +27,7 @@ markAsRead() {
       <div className="col-xs-1">
         <div className="row">
           <div className="col-xs-2">
-            <input type="checkbox"
+            <input type="checkbox" checked={this.props.message.selected}
               onClick={()=>this.props.toggleSelect(this.props.message)}/>
           </div>
           <div className="star-container col-xs-2">

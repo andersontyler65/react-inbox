@@ -91,8 +91,18 @@ class App extends Component {
     this.toggleProperty(message, 'selected')
   }
 
-  toggleStar(message) {
+  toggleStar = (message) => {
     this.toggleProperty(message, 'starred')
+  }
+
+  markAsRead() {
+    this.setState((prevState) => {
+      return {
+        messages: prevState.messages.map(message => (
+          message.selected ? { ...message, read: true } : message
+        ))
+      }
+    })
   }
 
   render() {
@@ -105,6 +115,7 @@ class App extends Component {
           toggleProperty={this.toggleProperty}
           toggleSelect={this.toggleSelect}
           toggleStar={this.toggleStar}
+          markAsRead={this.markAsRead}
         />
         {/* <Message /> */}
       </div>

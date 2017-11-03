@@ -2,12 +2,6 @@ import React from 'react';
 import Message from '../components/Message'
 
 class Messages extends React.Component {
-
-// const Messages = ({
-//   messages,
-//   toggleSelect,
-//   toggleStar,
-// }) => {
   constructor(props) {
     super(props)
     // console.log(props);
