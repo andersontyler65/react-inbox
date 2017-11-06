@@ -1,14 +1,27 @@
 import React from 'react'
 
+const Toolbar = ({markAsRead, markAsUnread, applyLabel, removeLabel, deleteMessages, toggleSelectAll, messages}) => {
 
+  const unreadCount = messages.filter(message => !message.read).length
+  const selectedCount = messages.filter(message => message.selected).length
+  let selectAllClass
 
+  switch(selectedCount) {
+    case 0:
+    selectAllClass = 'fa-square-o'
+    break;
+  case messages.length:
+    selectAllClass = 'fa-check-square-o'
+    break;
+    default:
+  selectAllClass = 'fa-minus-square-o'
+  }
 
-const Toolbar = () => {
   return (
     <div className="row toolbar">
       <div className="col-md-12">
         <p className="pull-right">
-          <span className="badge badge">2</span>
+          <span className="badge badge">{unreadCount}</span>
           unread messages
         </p>
 
@@ -16,33 +29,33 @@ const Toolbar = () => {
           <i className="fa fa-plus"></i>
         </a>
 
-        <button className="btn btn-default">
+        <button onClick={toggleSelectAll} className="btn btn-default">
           <i className="fa fa-minus-square-o"></i>
         </button>
 
-        <button className="btn btn-default">Mark As Read</button>
+        <button onClick={markAsRead} disabled={selectedCount===0} className="btn btn-default">Mark As Read</button>
 
-        <button className="btn btn-default">Mark As Unread</button>
+        <button onClick={markAsUnread} disabled={selectedCount===0} className="btn btn-default">Mark As Unread</button>
 
-        <select className="form-control label-select">
+        <select onChange={(e)=>{applyLabel(e.target.value); e.target.selectedIndex=0}} className="form-control label-select">
           <option>Apply label</option>
-          <option value="dev">dev</option>
-          <option value="personal">personal</option>
-          <option value="gschool">gschool</option>
+          <option onClick={applyLabel} value="dev">dev</option>
+          <option onClick={applyLabel} value="personal">personal</option>
+          <option onClick={applyLabel} value="gschool">gschool</option>
         </select>
 
-        <select className="form-control label-select">
+        <select onChange={(e)=>{removeLabel(e.target.value); e.target.selectedIndex=0}} className="form-control label-select">
           <option>Remove label</option>
-          <option value="dev">dev</option>
-          <option value="personal">personal</option>
-          <option value="gschool">gschool</option>
+          <option onClick={removeLabel} value="dev">dev</option>
+          <option onClick={removeLabel} value="personal">personal</option>
+          <option onClick={removeLabel} value="gschool">gschool</option>
         </select>
 
         <button className="btn btn-default">
-          <i className="fa fa-trash-o"></i>
+          <i onClick = {deleteMessages} className="fa fa-trash-o"></i>
         </button>
       </div>
     </div>
-)
+  )
 }
 export default Toolbar;

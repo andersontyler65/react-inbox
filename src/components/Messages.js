@@ -4,12 +4,9 @@ import Message from '../components/Message'
 class Messages extends React.Component {
   constructor(props) {
     super(props)
-    // console.log(props);
   };
   render() {
-    // console.log(this.props)
     return (
-
       <div>
         {
           this.props.messages.map((message, i) => <Message
@@ -18,11 +15,14 @@ class Messages extends React.Component {
             toggleSelect={this.props.toggleSelect}
             toggleProperty={this.props.toggleProperty}
             toggleStar={this.props.toggleStar}
+            toggleRead = { this.props.toggleRead }
+            markAsRead = { this.props.markAsRead }
+            markAsUnread = { this.props.markAsUnread }
           />)
         }
       </div>
     )
-    }
+  }
 }
 
 

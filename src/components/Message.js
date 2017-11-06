@@ -4,44 +4,56 @@ import Messages from '../components/Messages';
 class Message extends React.Component {
   constructor(props) {
     super(props)
-
 }
-
-
   send = () => {
       this.setState((props) => ({
         state: this.state.message
       }))
     }
 
+  classes = () => {
+    let classes = `row message ${this.props.message.read ? 'read' : 'unread' } ${this.props.message.selected ? 'selected' : ""}`
+    return classes;
+  }
+starMessage = (e) => {
+  e.stopPropagation()
+  this.props.toggleStar(this.props.message, 'starred')
+}
+Labels = ({label}) => {
+  return (
+    <span className="label label-warning">{label}</span>
+  )
+}
+
   render() {
-    // console.log(this.props)
-    const messageSubject = {
-        subject: this.props.message.subject,
-      }
+    const messageSubject = this.props.message.subject;
 
-      const readClass = messageSubject.read ? 'read' : 'unread'
+      const readClass = this.props.message.read ? 'true' : 'false';
 
-      return (
-      <div className="row message read">
+      return(
+      <div onClick={()=>this.props.toggleProperty(this.props.message, "selected")} className={this.classes()}>
+
       <div className="col-xs-1">
         <div className="row">
           <div className="col-xs-2">
-            <input type="checkbox" checked={this.props.message.selected}
-              onClick={()=>this.props.toggleSelect(this.props.message)}/>
+            <input
+              type="checkbox"
+              readOnly={true} checked={ !!this.props.message.selected}
+            />
           </div>
           <div className="star-container col-xs-2">
-            <i className={this.props.message.starred?'star fa fa-star':'star fa fa-star-o'} onClick={()=>this.props.toggleStar(this.props.message)}></i>
+            <i className={this.props.message.starred ? 'star fa fa-star':'star fa fa-star-o'} onClick={this.starMessage}></i>
           </div>
         </div>
       </div>
-      <div className="col-xs-11">
-            <p align="left">Subject:</p>{JSON.stringify(messageSubject.subject)}
+    <div className="col-xs-11">
+        {this.props.message.labels.map((label, i) => <this.Labels key={i} label={label} /> )}
+        {JSON.stringify(messageSubject)}
       </div>
     </div>
-        )
-      }
+    )
   }
+}
 
 
 export default Message;

@@ -74,16 +74,13 @@ class App extends Component {
 
 
   toggleProperty = (message, property) => {
-    this.setState((prevState) => {
-      console.log(prevState);
-      const index = prevState.messages.indexOf(message)
-      return {
+      const index = this.state.messages.indexOf(message)
+      this.setState({
         messages: [
-          ...prevState.messages.slice(0, index),
+          ...this.state.messages.slice(0, index),
           { ...message, [property]: !message[property] },
-          ...prevState.messages.slice(index + 1),
+          ...this.state.messages.slice(index + 1),
         ]
-      };
     })
   }
 
@@ -94,8 +91,51 @@ class App extends Component {
   toggleStar = (message) => {
     this.toggleProperty(message, 'starred')
   }
+  toggleRead = (message) => {
+    this.toggleProperty(messages, 'read')
+  }
 
-  markAsRead() {
+  applyLabel = (label) => {
+    const messages = this.state.messages.map(message => (
+      message.selected && !message.labels.includes(label) ?
+      {...message, labels: [...message.labels, label].sort()} : message
+    ))
+    this.setState({ messages })
+  }
+
+  removeLabel = (label) => {
+    const messages = this.state.messages.map(message => {
+      const index = message.labels.indexOf(label)
+      if(message.selected && index > -1){
+        return {
+          ...message,
+          labels: [
+            ...message.labels.slice(0, index),
+            ...message.labels.slice(index + 1)
+          ]
+        }
+      }
+      return message
+    })
+    this.setState({ messages })
+  }
+
+  deleteMessages = () => {
+    const messages = this.state.messages.filter(message => !message.selected)
+    this.setState({ messages })
+  }
+
+  toggleSelectAll = () => {
+    const selectedMessages = this.state.messages.filter(message => message.selected)
+    const selected = selectedMessages.length !== this.state.messages.length
+    this.setState({
+      messages: this.state.messages.map(message => (
+        message.selected !== selected ? {...message, selected } : message
+      ))
+    })
+  }
+
+  markAsRead = (message) => {
     this.setState((prevState) => {
       return {
         messages: prevState.messages.map(message => (
@@ -105,19 +145,35 @@ class App extends Component {
     })
   }
 
+  markAsUnread = () => {
+    this.setState({
+      messages: this.state.messages.map(message => (
+        message.selected ? {...message, read: false } : message
+      ))
+    })
+  }
+
   render() {
-    console.log(this.state);
+    console.log(this.state.messages);
     return (
       <div className="App">
-        <Toolbar />
-        <Messages
-          messages={ this.state.messages }
-          toggleProperty={this.toggleProperty}
-          toggleSelect={this.toggleSelect}
-          toggleStar={this.toggleStar}
-          markAsRead={this.markAsRead}
+        <Toolbar
+          markAsRead = { this.markAsRead }
+          markAsUnread = { this.markAsUnread }
+          applyLabel = { this.applyLabel }
+          removeLabel = { this.removeLabel }
+          deleteMessages = { this.deleteMessages }
+          toggleSelectAll = { this.toggleSelectAll }
+          messages = { this.state. messages }
         />
-        {/* <Message /> */}
+        <Messages
+          messages = { this.state.messages }
+          toggleSelect = { this.toggleSelect }
+          toggleProperty = { this.toggleProperty }
+          toggleStar = { this.toggleStar }
+          toggleRead = { this.toggleRead }
+          applyLabel = { this.applyLabel}
+        />
       </div>
     )
   }
