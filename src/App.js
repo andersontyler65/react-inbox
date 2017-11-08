@@ -4,6 +4,7 @@ import './App.css';
 import Toolbar from './components/Toolbar';
 import Messages from './components/Messages';
 import Message from './components/Message';
+import Compose from './components/Compose';
 
 class App extends Component {
   constructor(props) {
@@ -15,9 +16,7 @@ class App extends Component {
 
 async componentDidMount() {
   const response = await this.getMessages();
-
   const { messages } = response._embedded;
-
   this.setState({ messages })
 }
 
@@ -29,6 +28,36 @@ async componentDidMount() {
   })
   .then(res => res.json())
 )
+
+async request(path, method = 'GET', body = null) {
+    if (body) body = JSON.stringify(body)
+    return await fetch(`${process.env.REACT_APP_API_URL}${path}`, {
+      method: method,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: body
+    })
+  }
+
+async updateMessages(payload) {
+   await this.request('/api/messages', 'PATCH', payload)
+  }
+
+async sendMessage(message) {
+  const response = await this.request('/api/messages', 'POST', {
+    subject: message.subject,
+    body: message.body,
+  })
+  const newMessage = await response.json()
+
+  const messages = [...this.state.messsages, newMessage]
+  this.setState({
+    messages,
+    composing: false,
+  })
+}
 
   toggleProperty = (message, property) => {
       const index = this.state.messages.indexOf(message)
@@ -92,6 +121,10 @@ async componentDidMount() {
     })
   }
 
+  toggleCompose = (message) => {
+    this.setState({composing: !this.state.composing})
+  }
+
   markAsRead = (message) => {
     this.setState((prevState) => {
       return {
@@ -111,7 +144,6 @@ async componentDidMount() {
   }
 
   render() {
-    console.log(this.state.messages);
     return (
       <div className="App">
         <Toolbar
@@ -120,9 +152,15 @@ async componentDidMount() {
           applyLabel = { this.applyLabel }
           removeLabel = { this.removeLabel }
           deleteMessages = { this.deleteMessages }
+          toggleCompose = {this.toggleCompose }
           toggleSelectAll = { this.toggleSelectAll }
           messages = { this.state. messages }
         />
+
+        {this.state.composing ?
+          <Compose
+            sendMessage={ this.sendMessage } /> : null}
+
         <Messages
           messages = { this.state.messages }
           toggleSelect = { this.toggleSelect }
