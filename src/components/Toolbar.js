@@ -2,9 +2,9 @@ import React from 'react'
 
 const Toolbar = ({markAsRead, markAsUnread, applyLabel, removeLabel, deleteMessages, toggleSelectAll, toggleCompose, messages}) => {
 
-  const unreadCount = messages.filter(message => !message.read).length
+const unreadCount = messages.filter(message => !message.read).length
   const selectedCount = messages.filter(message => message.selected).length
-  let selectAllClass
+    let selectAllClass
 
   switch(selectedCount) {
     case 0:

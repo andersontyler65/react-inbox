@@ -5,34 +5,36 @@ class Message extends React.Component {
   constructor(props) {
     super(props)
 }
-  send = () => {
-      this.setState((props) => ({
-        state: this.state.message
+
+send = () => {
+  this.setState((props) => ({
+    state: this.state.message
       }))
     }
 
-  classes = () => {
-    let classes = `row message ${this.props.message.read ? 'read' : 'unread' } ${this.props.message.selected ? 'selected' : ""}`
-    return classes;
-  }
+classes = () => {
+  let classes = `row message ${this.props.message.read ? 'read' : 'unread' } ${this.props.message.selected ? 'selected' : ""}`
+  return classes;
+}
+
 starMessage = (e) => {
   e.stopPropagation()
   this.props.toggleStar(this.props.message, 'starred')
 }
+
 Labels = ({label}) => {
   return (
     <span className="label label-warning">{label}</span>
   )
 }
 
-  render() {
-    const messageSubject = this.props.message.subject;
+render() {
+  const messageSubject = this.props.message.subject;
+    // console.log('this is '+ messageSubject)
+  const readClass = this.props.message.read ? 'true' : 'false';
 
-      const readClass = this.props.message.read ? 'true' : 'false';
-
-      return(
-      <div onClick={()=>this.props.toggleProperty(this.props.message, "selected")} className={this.classes()}>
-
+return(
+    <div onClick={()=>this.props.toggleProperty(this.props.message, "selected")} className={this.classes()}>
       <div className="col-xs-1">
         <div className="row">
           <div className="col-xs-2">
