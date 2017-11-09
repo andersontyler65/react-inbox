@@ -25,7 +25,7 @@ sendMessage = async(message) => {
   }
 
 getMessages = () => (
-  fetch(`${process.env.REACT_APP_API_URL}/hoard`),{
+  fetch(`${process.env.REACT_APP_API_URL}/hoard`,{
     headers: {
       'Content-Type': 'application/json'
     }
@@ -34,7 +34,7 @@ getMessages = () => (
 )
 
 postMessages = async (message) => {
-let response = await fetch(`${process.env.REACT_APP_API_URL}/hoard`), {
+let response = await fetch(`${process.env.REACT_APP_API_URL}/hoard`, {
       headers: {
         'Content-Type': 'application/json'
       },
