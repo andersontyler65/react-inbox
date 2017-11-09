@@ -25,7 +25,7 @@ sendMessage = async(message) => {
   }
 
 getMessages = () => (
-  fetch(`${process.env.REACT_APP_API_URL}/hoard`,{
+  fetch('http://localhost:8082/api/messages', {
     headers: {
       'Content-Type': 'application/json'
     }
