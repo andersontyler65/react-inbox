@@ -2,19 +2,21 @@ import React from 'react'
 
 const Toolbar = ({markAsRead, markAsUnread, applyLabel, removeLabel, deleteMessages, toggleSelectAll, toggleCompose, messages}) => {
 
+const messagesJson = JSON.stringify(messages)
 const unreadCount = messages.filter(message => !message.read).length
-  const selectedCount = messages.filter(message => message.selected).length
-    let selectAllClass
+const selectedCount = messages.filter(message => message.selected).length
 
-  switch(selectedCount) {
+let selectAllClass
+
+switch(selectedCount) {
     case 0:
-    selectAllClass = 'fa-square-o'
+selectAllClass = 'fa-square-o'
     break;
-  case messages.length:
-    selectAllClass = 'fa-check-square-o'
+    case messages.length:
+selectAllClass = 'fa-check-square-o'
     break;
     default:
-  selectAllClass = 'fa-minus-square-o'
+selectAllClass = 'fa-minus-square-o'
   }
 
   return (

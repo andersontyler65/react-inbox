@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import Toolbar from './components/Toolbar';
 import Compose from './components/Compose';
@@ -21,22 +21,7 @@ async componentDidMount() {
 }
 
 sendMessage = async(message) => {
-  console.log(message.subject)
-  console.log(message.body)
-    const response = await this.postMessages({
-      subject: message.subject,
-      body: message.body,
-    })
-    console.log(response)
-    console.log(this.state.messages)
-    console.log(message)
-    const { messages } =
-    this.setState({
-      messages: messages,
-      message: response,
-      composing: false,
-    })
-    console.log(this.state.messages)
+  this.postMessages(message)
   }
 
 getMessages = () => (
@@ -48,8 +33,8 @@ getMessages = () => (
   .then(res => res.json())
 )
 
-postMessages = (message) => (
-  fetch('http://localhost:8082/api/messages', {
+postMessages = async (message) => {
+let response = await fetch('http://localhost:8082/api/messages', {
       headers: {
         'Content-Type': 'application/json'
       },
@@ -59,27 +44,15 @@ postMessages = (message) => (
       }),
       method: 'POST',
     })
-    .then(res => res.json())
-  )
 
-// request = async(path, method = 'GET', body = null) => {
-//     if (body) body = JSON.stringify(body)
-//     return await fetch(`${process.env.REACT_APP_API_URL}${path}`, {
-//       method: method,
-//       headers: {
-//         'Content-Type': 'application/json',
-//         'Accept': 'application/json',
-//       },
-//       body: body
-//     })
-//   }
-//
-// updateMessages = async(payload) =>{
-//    await this.request('/api/messages', 'PATCH', payload)
-//   }
+const response2 = await this.getMessages()
+const { messages } = response2._embedded;
+this.setState({
+  messages: messages,
+  composing: false, })
+}
 
-
-  toggleProperty = (message, property) => {
+toggleProperty = (message, property) => {
       const index = this.state.messages.indexOf(message)
       this.setState({
         messages: [
