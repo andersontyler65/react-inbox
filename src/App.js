@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
+import logo from './logo.svg';
 import './App.css';
 import Toolbar from './components/Toolbar';
 import Compose from './components/Compose';
@@ -30,7 +30,7 @@ getMessages = () => (
       'Content-Type': 'application/json'
     }
   })
-  .then(res => res.json())
+.then(res => res.json())
 )
 
 postMessages = async (message) => {
