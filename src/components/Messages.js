@@ -20,6 +20,7 @@ class Messages extends React.Component {
             toggleStar={this.props.toggleStar}
             toggleRead = { this.props.toggleRead }
             toggleCompose = {this.props.toggleCompose }
+            updateMessages = { this.props.updateMessages }
             markAsRead = { this.props.markAsRead }
             markAsUnread = { this.props.markAsUnread }
           />)

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Toolbar = ({markAsRead, markAsUnread, applyLabel, removeLabel, deleteMessages, toggleSelectAll, toggleCompose, messages}) => {
+const Toolbar = ({markAsRead, markAsUnread, applyLabel, removeLabel, deleteMessages, toggleSelectAll, toggleCompose, updateMessages, messages}) => {
 
 const messagesJson = JSON.stringify(messages)
 const unreadCount = messages.filter(message => !message.read).length
