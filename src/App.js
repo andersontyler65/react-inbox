@@ -14,11 +14,18 @@ class App extends Component {
     };
   }
 
-async componentDidMount() {
-  const response = await this.getMessages();
-  const { messages } = response._embedded;
-  this.setState({ messages })
-}
+  async componentDidMount() {
+    const response = await this.getMessages()
+    console.log("this is " + (messages))
+      const { messages } = response._embedded
+      this.setState({ messages })
+   }
+
+// componentDidMount = async (message) => {
+//   const response = await this.getMessages();
+//   const { messages } = response._embedded;
+//   this.setState({ messages })
+// }
 
 sendMessage = async(message) => {
   this.postMessages(message)
@@ -183,6 +190,7 @@ toggleProperty = (message, property) => {
           updateMessages = { this.updateMessages }
           toggleRead = { this.toggleRead }
           applyLabel = { this.applyLabel}
+          removeLabel = { this.removeLabel}
         />
       </div>
     )

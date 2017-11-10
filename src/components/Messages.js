@@ -23,6 +23,8 @@ class Messages extends React.Component {
             updateMessages = { this.props.updateMessages }
             markAsRead = { this.props.markAsRead }
             markAsUnread = { this.props.markAsUnread }
+            applyLabel = {this.props.applyLabel}
+            removeLabel = { this.props.removeLabel}
           />)
         }
       </div>
