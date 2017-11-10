@@ -59,9 +59,9 @@ this.setState({
   composing: false, })
 }
 
-updateMessages = async (payload) => {
-    await this.request('/api/messages', 'PATCH', payload)
-  }
+// updateMessages = async (payload) => {
+//     await this.request('/api/messages', 'PATCH', payload)
+//   }
 
 toggleProperty = (message, property) => {
       const index = this.state.messages.indexOf(message)
@@ -105,7 +105,7 @@ toggleProperty = (message, property) => {
   removeLabel = async(label) => {
     await this.setState ({
       'messageIds': this.state.messages.filter(message => message.selected).map(message => message.id),
-      "command": "addLabel",
+      "command": "removeLabel",
       "label": label
     })
     const messages = this.state.messages.map(message => {
@@ -172,7 +172,7 @@ toggleProperty = (message, property) => {
           deleteMessages = { this.deleteMessages }
           toggleCompose = {this.toggleCompose }
           toggleSelectAll = { this.toggleSelectAll }
-          updateMessages = { this.updateMessages }
+          // updateMessages = { this.updateMessages }
           messages = { this.state. messages }
         />
 
@@ -187,7 +187,7 @@ toggleProperty = (message, property) => {
           toggleStar = { this.toggleStar }
           toggleCompose = { this.toggleCompose }
           sendMessage = { this.sendMessage }
-          updateMessages = { this.updateMessages }
+          // updateMessages = { this.updateMessages }
           toggleRead = { this.toggleRead }
           applyLabel = { this.applyLabel}
           removeLabel = { this.removeLabel}
