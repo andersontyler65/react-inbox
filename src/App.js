@@ -83,7 +83,7 @@ toggleProperty = (message, property) => {
   }
 
   applyLabel = async(label) => {
-    await this.updateMessages ({
+    await this.setState ({
       'messageIds': this.state.messages.filter(message => message.selected).map(message => message.id),
       "command": "addLabel",
       "label": label
