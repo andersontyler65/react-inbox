@@ -21,12 +21,6 @@ class App extends Component {
       this.setState({ messages })
    }
 
-// componentDidMount = async (message) => {
-//   const response = await this.getMessages();
-//   const { messages } = response._embedded;
-//   this.setState({ messages })
-// }
-
 sendMessage = async(message) => {
   this.postMessages(message)
   }
